@@ -25,11 +25,13 @@ class pushMessage extends Thread {
   }
 
   public void run() {
+
     try {
       Push.combined(message, badge, sound, keystore, password, production, token);
     } catch (Exception e) {
       System.err.println("error in Push.combined(...)");
     }
+
   }
 
 }

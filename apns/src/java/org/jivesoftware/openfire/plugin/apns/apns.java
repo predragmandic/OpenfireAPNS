@@ -65,36 +65,31 @@ public class apns implements Plugin, PacketInterceptor {
       if(original instanceof Message) {
 
         Message receivedMessage = (Message)original;
-
-        //JID targetJID = receivedMessage.getTo();
-        JID targetJID = receivedMessage.getFrom();
-
-        String targetJID_Bare = targetJID.toBareJID();				
         String body = receivedMessage.getBody();
 
-        String[] userID = targetJID_Bare.split("@");
-        if( userID[0] == null ) userID[0] = "NULL";
+        String targetID = receivedMessage.getTo().toBareJID().split("@")[0];
+        if( targetID.isEmpty() ) targetID = "NULL";
 
-        //String payloadString = userID[0];
-        //payloadString = payloadString.concat(": ");
-        //payloadString = payloadString.concat(body);
+        String senderID = receivedMessage.getFrom().toBareJID().split("@")[0];
+        if( senderID.isEmpty() ) senderID = "NULL";
 
         String payloadString = "";
-        if( body.startsWith("BROADCAST||") && userID[0].equals("odeon_admin") ) {
-          String [] body_split = body.split("||");
-          payloadString = body_split[1];
-          payloadString.concat(": ");
-          payloadString.concat(body_split[2]);
-        } else {
-          payloadString = userID[0];
-          payloadString.concat(": ");
-          payloadString.concat(body);
+        try {
+          if( body.startsWith("BROADCAST||") && senderID.equals("odeon_admin") ) {
+            String [] body_split = body.split("\\|\\|");
+            payloadString = body_split[1] + ": " + body_split[2];
+          } else {
+            payloadString = senderID + ": " + body;
+          }
+        }catch(Exception e) {
+          e.printStackTrace();
         }
 
-        String deviceToken = dbManager.getDeviceToken(targetJID);
+
+        String deviceToken = dbManager.getDeviceToken(receivedMessage.getTo());
         if(deviceToken == null) return;
 
-        pushMessage message = new pushMessage(payloadString, 1, "beep.caf", "/usr/share/openfire/certificate.p12", "123789", false, deviceToken);
+        pushMessage message = new pushMessage(payloadString, 1, "beep.caf", "/usr/share/openfire/certificate.p12", "123789", true, deviceToken);
         message.start();
 
       }
@@ -105,3 +100,22 @@ public class apns implements Plugin, PacketInterceptor {
     return  !processed && read && packet instanceof Message;
   }
 }
+
+//public static void log_to_file(String data) {
+//  try {
+//
+//    Date date = new Date();
+//    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd--hh-mm-ss");
+//    String timestamp = sdf.format(date);
+//
+//    String log_string = timestamp;
+//    log_string = log_string + data;
+//
+//    FileWriter out = new FileWriter("/var/log/openfire/apns." + timestamp + ".log");
+//    out.write(log_string);
+//    out.close();
+//
+//  } catch (IOException e) {
+//    e.printStackTrace();
+//  }
+//}

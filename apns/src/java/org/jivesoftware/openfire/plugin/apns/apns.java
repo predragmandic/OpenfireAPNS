@@ -71,7 +71,7 @@ public class apns implements Plugin, PacketInterceptor {
 
 				if(deviceToken == null) return;
 				
-				pushMessage message = new pushMessage(body, 1, "beep.caf", "/usr/local/openfire/certificate.p12", "odeon", false, deviceToken);
+				pushMessage message = new pushMessage(body, 1, "beep.caf", "/usr/share/openfire/certificate.p12", "odeon", false, deviceToken);
 				message.start();
 				
 			}

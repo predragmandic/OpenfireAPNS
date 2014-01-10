@@ -63,15 +63,38 @@ public class apns implements Plugin, PacketInterceptor {
       Packet original = packet;			
 
       if(original instanceof Message) {
+
         Message receivedMessage = (Message)original;
-        JID targetJID = receivedMessage.getTo();
 
+        //JID targetJID = receivedMessage.getTo();
+        JID targetJID = receivedMessage.getFrom();
+
+        String targetJID_Bare = targetJID.toBareJID();				
         String body = receivedMessage.getBody();
-        String deviceToken = dbManager.getDeviceToken(targetJID);
 
+        String[] userID = targetJID_Bare.split("@");
+        if( userID[0] == null ) userID[0] = "NULL";
+
+        //String payloadString = userID[0];
+        //payloadString = payloadString.concat(": ");
+        //payloadString = payloadString.concat(body);
+
+        String payloadString = "";
+        if( body.startsWith("BROADCAST||") && userID[0].equals("odeon_admin") ) {
+          String [] body_split = body.split("||");
+          payloadString = body_split[1];
+          payloadString.concat(": ");
+          payloadString.concat(body_split[2]);
+        } else {
+          payloadString = userID[0];
+          payloadString.concat(": ");
+          payloadString.concat(body);
+        }
+
+        String deviceToken = dbManager.getDeviceToken(targetJID);
         if(deviceToken == null) return;
 
-        pushMessage message = new pushMessage(body, 1, "beep.caf", "/usr/share/openfire/certificate.p12", "odeon", false, deviceToken);
+        pushMessage message = new pushMessage(payloadString, 1, "beep.caf", "/usr/share/openfire/certificate.p12", "123789", false, deviceToken);
         message.start();
 
       }

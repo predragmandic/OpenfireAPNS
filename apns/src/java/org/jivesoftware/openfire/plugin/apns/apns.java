@@ -31,57 +31,57 @@ import java.io.*;
 
 
 public class apns implements Plugin, PacketInterceptor {
-	
-	private static final Logger Log = LoggerFactory.getLogger(apns.class);
-	
-    private InterceptorManager interceptorManager;
-    
-    private apnsDBHandler dbManager;
-    
-    public apns() {
-        interceptorManager = InterceptorManager.getInstance();
-        dbManager = new apnsDBHandler();       
-    }
-    
-	public void initializePlugin(PluginManager pManager, File pluginDirectory) {		
-        //TODO
-        interceptorManager.addInterceptor(this);
-        
-        IQHandler myHandler = new apnsIQHandler();
-        IQRouter iqRouter = XMPPServer.getInstance().getIQRouter();       
-        iqRouter.addHandler(myHandler);
-    }
-	
-	public void destroyPlugin() {
-		//TODO
-        interceptorManager.removeInterceptor(this);
-    }
-	
-	public void interceptPacket(Packet packet, Session session, boolean read, boolean processed) throws PacketRejectedException {
-		
-		if(isValidTargetPacket(packet,read,processed)) {
-			Packet original = packet;			
-						
-			if(original instanceof Message) {
-				Message receivedMessage = (Message)original;
-				JID targetJID = receivedMessage.getTo();
 
-				String body = receivedMessage.getBody();
-				String deviceToken = dbManager.getDeviceToken(targetJID);
+  private static final Logger Log = LoggerFactory.getLogger(apns.class);
 
-				if(deviceToken == null) return;
-				
-				pushMessage message = new pushMessage(body, 1, "beep.caf", "/usr/local/openfire/certificate.p12", "odeon", false, deviceToken);
-				message.start();
-				
-			}
-			
-		}
-		
-	
-	}
-	
-	private boolean isValidTargetPacket(Packet packet, boolean read, boolean processed) {
-        return  !processed && read && packet instanceof Message;
+  private InterceptorManager interceptorManager;
+
+  private apnsDBHandler dbManager;
+
+  public apns() {
+    interceptorManager = InterceptorManager.getInstance();
+    dbManager = new apnsDBHandler();       
+  }
+
+  public void initializePlugin(PluginManager pManager, File pluginDirectory) {		
+    //TODO
+    interceptorManager.addInterceptor(this);
+
+    IQHandler myHandler = new apnsIQHandler();
+    IQRouter iqRouter = XMPPServer.getInstance().getIQRouter();       
+    iqRouter.addHandler(myHandler);
+  }
+
+  public void destroyPlugin() {
+    //TODO
+    interceptorManager.removeInterceptor(this);
+  }
+
+  public void interceptPacket(Packet packet, Session session, boolean read, boolean processed) throws PacketRejectedException {
+
+    if(isValidTargetPacket(packet,read,processed)) {
+      Packet original = packet;			
+
+      if(original instanceof Message) {
+        Message receivedMessage = (Message)original;
+        JID targetJID = receivedMessage.getTo();
+
+        String body = receivedMessage.getBody();
+        String deviceToken = dbManager.getDeviceToken(targetJID);
+
+        if(deviceToken == null) return;
+
+        pushMessage message = new pushMessage(body, 1, "beep.caf", "/usr/share/openfire/certificate.p12", "odeon", false, deviceToken);
+        message.start();
+
+      }
+
     }
+
+
+  }
+
+  private boolean isValidTargetPacket(Packet packet, boolean read, boolean processed) {
+    return  !processed && read && packet instanceof Message;
+  }
 }

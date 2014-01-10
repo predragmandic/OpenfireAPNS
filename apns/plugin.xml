@@ -11,7 +11,7 @@
     <version>0.1</version>
     <date>1/10/2014</date>
     <url>https://www.phlogisto.com</url>
-    <minServerVersion>3.5.0</minServerVersion>
+    <minServerVersion>3.8.0</minServerVersion>
     <databaseKey>apns</databaseKey>
     <databaseVersion>0</databaseVersion>
 </plugin>

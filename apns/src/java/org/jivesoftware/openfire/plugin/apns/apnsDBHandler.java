@@ -18,61 +18,61 @@ import java.io.*;
 
 public class apnsDBHandler {
 
-	private static final Logger Log = LoggerFactory.getLogger(apns.class);
-	
-	private static final String LOAD_TOKEN = "SELECT devicetoken FROM ofAPNS WHERE JID=?";
-	private static final String INSERT_TOKEN = "INSERT INTO ofAPNS VALUES(?, ?) ON DUPLICATE KEY UPDATE devicetoken = ?";
+  private static final Logger Log = LoggerFactory.getLogger(apns.class);
 
-    public boolean insertDeviceToken(JID targetJID, String token) {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        boolean isCompleted = false;
-        try {
-            con = DbConnectionManager.getConnection();
-            pstmt = con.prepareStatement(INSERT_TOKEN);
-            pstmt.setString(1, targetJID.toBareJID());
-            pstmt.setString(2, token);
-            pstmt.setString(3, token);            
-            pstmt.executeUpdate();
-            pstmt.close();
-            
-            isCompleted = true;
-        }
-        catch (SQLException sqle) {
-        	Log.error(sqle.getMessage(), sqle);
-        	isCompleted = false;
-        }
-        finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
-        }
-        return isCompleted;
+  private static final String LOAD_TOKEN = "SELECT devicetoken FROM ofAPNS WHERE JID=?";
+  private static final String INSERT_TOKEN = "INSERT INTO ofAPNS VALUES(?, ?) ON DUPLICATE KEY UPDATE devicetoken = ?";
+
+  public boolean insertDeviceToken(JID targetJID, String token) {
+    Connection con = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    boolean isCompleted = false;
+    try {
+      con = DbConnectionManager.getConnection();
+      pstmt = con.prepareStatement(INSERT_TOKEN);
+      pstmt.setString(1, targetJID.toBareJID());
+      pstmt.setString(2, token);
+      pstmt.setString(3, token);            
+      pstmt.executeUpdate();
+      pstmt.close();
+
+      isCompleted = true;
     }
-    	
-    public String getDeviceToken(JID targetJID) {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-                
-        String returnToken = null;
-        try {
-            con = DbConnectionManager.getConnection();
-            pstmt = con.prepareStatement(LOAD_TOKEN);
-            pstmt.setString(1, targetJID.toBareJID());
-            rs = pstmt.executeQuery();
-            if (rs.next()) {
-            	returnToken = rs.getString(1);
-            }                     
-            rs.close();
-            pstmt.close();
-        }
-        catch (SQLException sqle) {
-            Log.error(sqle.getMessage(), sqle);
-            returnToken = sqle.getMessage(); 
-        }
-        finally {
-            DbConnectionManager.closeConnection(rs, pstmt, con);
-        }
-        return returnToken;
+    catch (SQLException sqle) {
+      Log.error(sqle.getMessage(), sqle);
+      isCompleted = false;
     }
+    finally {
+      DbConnectionManager.closeConnection(rs, pstmt, con);
+    }
+    return isCompleted;
+  }
+
+  public String getDeviceToken(JID targetJID) {
+    Connection con = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
+    String returnToken = null;
+    try {
+      con = DbConnectionManager.getConnection();
+      pstmt = con.prepareStatement(LOAD_TOKEN);
+      pstmt.setString(1, targetJID.toBareJID());
+      rs = pstmt.executeQuery();
+      if (rs.next()) {
+        returnToken = rs.getString(1);
+      }                     
+      rs.close();
+      pstmt.close();
+    }
+    catch (SQLException sqle) {
+      Log.error(sqle.getMessage(), sqle);
+      returnToken = sqle.getMessage(); 
+    }
+    finally {
+      DbConnectionManager.closeConnection(rs, pstmt, con);
+    }
+    return returnToken;
+  }
 }

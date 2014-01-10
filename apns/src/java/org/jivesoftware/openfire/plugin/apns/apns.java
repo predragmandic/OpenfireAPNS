@@ -89,7 +89,7 @@ public class apns implements Plugin, PacketInterceptor {
         String deviceToken = dbManager.getDeviceToken(receivedMessage.getTo());
         if(deviceToken == null) return;
 
-        pushMessage message = new pushMessage(payloadString, 1, "beep.caf", "/usr/share/openfire/certificate.p12", "123789", true, deviceToken);
+        pushMessage message = new pushMessage(payloadString, 1, "beep.caf", "/usr/share/openfire/certificate.p12", "123789", false, deviceToken);
         message.start();
 
       }

@@ -75,10 +75,7 @@ public class apns implements Plugin, PacketInterceptor {
         message.start();
 
       }
-
     }
-
-
   }
 
   private boolean isValidTargetPacket(Packet packet, boolean read, boolean processed) {

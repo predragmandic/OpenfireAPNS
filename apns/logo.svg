@@ -15,7 +15,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="/home/pmandic/encrypted/documents/wrk/odeon/apns-plugin/OpenfireAPNS/apns/logo_small.png"
+   inkscape:export-xdpi="2.74"
+   inkscape:export-ydpi="2.74">
   <defs
      id="defs4">
     <linearGradient
@@ -137,6 +140,38 @@
          operator="atop"
          result="result9" />
     </filter>
+    <filter
+       id="filter3812"
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow">
+      <feFlood
+         id="feFlood3814"
+         flood-opacity="1"
+         flood-color="rgb(0,0,0)"
+         result="flood" />
+      <feComposite
+         id="feComposite3816"
+         in2="SourceGraphic"
+         in="flood"
+         operator="in"
+         result="composite1" />
+      <feGaussianBlur
+         id="feGaussianBlur3818"
+         in="composite"
+         stdDeviation="8"
+         result="blur" />
+      <feOffset
+         id="feOffset3820"
+         dx="4"
+         dy="14"
+         result="offset" />
+      <feComposite
+         id="feComposite3822"
+         in2="offset"
+         in="SourceGraphic"
+         operator="over"
+         result="composite2" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -146,15 +181,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.49497475"
-     inkscape:cx="167.23137"
-     inkscape:cy="218.49842"
+     inkscape:cx="109.65268"
+     inkscape:cy="236.68117"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="730"
-     inkscape:window-height="734"
-     inkscape:window-x="683"
-     inkscape:window-y="19"
+     inkscape:window-width="1366"
+     inkscape:window-height="768"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -179,19 +214,19 @@
      transform="translate(-80.812217,-207.3437)">
     <path
        sodipodi:type="arc"
-       style="opacity:0.7;fill:url(#linearGradient3789);fill-opacity:1;stroke:none"
+       style="fill:url(#linearGradient3789);fill-opacity:1;stroke:none;filter:url(#filter3812)"
        id="path3781"
        sodipodi:cx="240.41631"
        sodipodi:cy="387.68179"
        sodipodi:rx="262.63965"
        sodipodi:ry="262.63965"
-       d="m 503.05595,387.68179 c 0,145.05188 -117.58777,262.63965 -262.63964,262.63965 -145.051877,0 -262.639653,-117.58777 -262.639653,-262.63965 0,-145.05187 117.587776,-262.63965 262.639653,-262.63965 145.05187,0 262.63964,117.58778 262.63964,262.63965 z"
-       transform="translate(103.03556,82.587826)" />
+       d="m 503.05595,387.68179 a 262.63965,262.63965 0 1 1 -525.279293,0 262.63965,262.63965 0 1 1 525.279293,0 z"
+       transform="matrix(0.87316172,0,0,0.87316172,133.52955,131.76071)" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot3984"
        style="font-size:144px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;filter:url(#filter4040);font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       transform="matrix(3.2261964,0,0,3.2261964,-2131.9859,-712.7866)"><flowRegion
+       transform="matrix(3.228257,0,0,3.228257,-2133.5671,-713.54224)"><flowRegion
          id="flowRegion3986"><rect
            id="rect3988"
            width="412.14224"
@@ -199,5 +234,6 @@
            x="725.28955"
            y="274.54471"
            style="font-size:144px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans" /></flowRegion><flowPara
-         id="flowPara3990">1</flowPara></flowRoot>  </g>
+         id="flowPara3990"
+         style="font-weight:bold;-inkscape-font-specification:Liberation Sans Bold">1</flowPara></flowRoot>  </g>
 </svg>
